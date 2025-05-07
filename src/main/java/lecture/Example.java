@@ -1,6 +1,6 @@
 package lecture;
-
-import java.util.function.Consumer;
+import java.time.LocalDateTime;
+import java.util.function.*;
 
 public class Example {
     public static void main(String[] args) {
@@ -14,5 +14,23 @@ public class Example {
          * Predicate : 매개변수와 boolean 값을 반환하는 testXXX() 메소드를 가지고 있다. (매개변수를 활용해서 Boolean값 리턴)
          * */
         Consumer<String> consumer = (str) ->{System.out.println(str + "출력됐");};
+        consumer.accept("안녕하세");
+
+        Supplier<LocalDateTime> supplier = () -> LocalDateTime.now();
+        LocalDateTime localDateTime = supplier.get();
+        System.out.println(localDateTime);
+
+//        Function<T,R>#apply (T t)  : R : 하나의 입력 T를 받아 출력 R로 변환한닺.
+        Function<String,Integer> function = (str1) -> Integer.parseInt(str1);
+
+        String str1 = "12345";
+        System.out.println(function.apply(str1));
+        // BinaryOperator<T>#apply(T t1, T t2) : T : T와 T를 연한하여 T를 리턴;
+        BinaryOperator<String> binaryOperator= (str2,str3) -> str2+str3;
+        System.out.println(binaryOperator.apply("hello","World"));
+        // Predicate <T> #test (T t) : boolean : T를 조사하여 boolean 을 리턴
+        Predicate<Object> predicate = value -> value instanceof String;
+        System.out.println("문자열인지 확인: " + predicate.test("123")); // true
+        System.out.println("문자열인지 확인: " + predicate.test(123)); // false
     }
 }
